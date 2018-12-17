@@ -10,6 +10,8 @@ sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc/sysctl.conf
 sysctl -p
+service networking restart
+sudo /etc/init.d/procps restart
 echo
 echo "===================================================="
 echo "   CONVIERTE ESTE EQUIPO EN UN ROUTER / GATEWAY !   "
