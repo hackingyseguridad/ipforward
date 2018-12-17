@@ -15,7 +15,7 @@ cat << "INFO"
  |_|  \_\___/ \__,_|\__\___|_|  V 1.0 
 INFO
 $BlancoAlt
-echo "   http://www.hackingyseguridad.com"
+echo "     http://www.hackingyseguridad.com"
 echo
 echo "===================================================="
 echo "   CONVIERTE ESTE EQUIPO EN UN ROUTER / GATEWAY !   "
