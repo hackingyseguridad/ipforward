@@ -13,11 +13,14 @@ cat << "INFO"
  |  _  // _ \| | | | __/ _ \ '__|
  | | \ \ (_) | |_| | ||  __/ |   
  |_|  \_\___/ \__,_|\__\___|_|  V 1.0 
-                                
 INFO
 $BlancoAlt
-echo "http://www.hackingyseguridad.com"
+echo "   http://www.hackingyseguridad.com"
 echo
+echo "===================================================="
+echo "   CONVIERTE ESTE EQUIPO EN UN ROUTER / GATEWAY !   "
+echo "===================================================="
+echo 
 echo ...
 $Blanco
 echo ipv4 >> /etc/modules
@@ -28,9 +31,5 @@ sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc
 sysctl -p
 service networking restart
 sudo /etc/init.d/procps restart
-echo
-echo "===================================================="
-echo "   CONVIERTE ESTE EQUIPO EN UN ROUTER / GATEWAY !   "
-echo "===================================================="
 iptables -L FORWARD -nv
 iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
