@@ -12,7 +12,7 @@ sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc
 sysctl -p
 echo
 echo "===================================================="
-echo "   POR FAVOR REINICIALIZA PARA QUE TENGA EFECTO !   "
+echo "   CONVIERTE ESTE EQUIPO EN UN ROUTER / GATEWAY !   "
 echo "===================================================="
 iptables -L FORWARD -nv
 iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
