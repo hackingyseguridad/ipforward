@@ -1,2 +1,0 @@
-Chequear si esta activo IP fowrwarding
-https://github.com/pentestmonkey/gateway-finder
