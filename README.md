@@ -2,8 +2,6 @@
 
 **Linux como router con IP Forwarding** — scripts para convertir un equipo Linux (Debian/Ubuntu) en un router / puerta de enlace (gateway) capaz de reenviar tráfico entre redes, con soporte de NAT (enmascaramiento) y una utilidad de comprobación remota.
 
-> Fuente: [hackingyseguridad.com](http://www.hackingyseguridad.com/)
-
 ---
 
 ### Tabla de contenidos
