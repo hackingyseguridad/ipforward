@@ -27,7 +27,7 @@
 
 ---
 
-### ¿Qué es IP Forwarding?
+### IP Forwarding
 
 **IP Forwarding** (reenvío de IP) es una función del kernel de Linux que permite que un equipo con **más de una interfaz de red** reenvíe paquetes que no van dirigidos a él mismo, sino a otra red distinta a la que está conectado.
 
@@ -222,7 +222,7 @@ done
 
 ---
 
-## Flujo de un paquete a través del router
+### Flujo de un paquete a través del router
 
 ```
  Host LAN (192.168.1.10)
@@ -255,7 +255,7 @@ Al recibir la respuesta, el proceso es inverso: `iptables` recuerda (mediante `c
 
 ---
 
-## Instalación y uso
+### Instalación y uso
 
 ```bash
 # 1. Clonar el repositorio
