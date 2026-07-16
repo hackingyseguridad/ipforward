@@ -1,4 +1,4 @@
-# ipforward
+### ipforward
 
 **Linux como router con IP Forwarding** — scripts para convertir un equipo Linux (Debian/Ubuntu) en un router / puerta de enlace (gateway) capaz de reenviar tráfico entre redes, con soporte de NAT (enmascaramiento) y una utilidad de comprobación remota.
 
@@ -6,7 +6,7 @@
 
 ---
 
-## Tabla de contenidos
+### Tabla de contenidos
 
 - [¿Qué es IP Forwarding?](#qué-es-ip-forwarding)
 - [Esquema de red](#esquema-de-red)
@@ -27,7 +27,7 @@
 
 ---
 
-## ¿Qué es IP Forwarding?
+### ¿Qué es IP Forwarding?
 
 **IP Forwarding** (reenvío de IP) es una función del kernel de Linux que permite que un equipo con **más de una interfaz de red** reenvíe paquetes que no van dirigidos a él mismo, sino a otra red distinta a la que está conectado.
 
@@ -53,7 +53,7 @@ Esta capacidad es la base de:
 
 ---
 
-## Esquema de red
+### Esquema de red
 
 Escenario típico que estos scripts ayudan a construir: un equipo Linux con **dos interfaces de red** actuando de puerta de enlace entre una red interna (LAN) y la red externa (Internet / WAN).
 
@@ -87,7 +87,7 @@ Escenario típico que estos scripts ayudan a construir: un equipo Linux con **do
 
 ---
 
-## Tabla resumen de scripts
+### Tabla resumen de scripts
 
 | Script | Líneas | Función principal | Modifica el sistema | Requiere `sudo/root` | Persistente tras reinicio |
 |---|---|---|---|---|---|
@@ -98,7 +98,7 @@ Escenario típico que estos scripts ayudan a construir: un equipo Linux con **do
 
 ---
 
-## Descripción detallada de cada script
+### script
 
 ### `ipforward.sh`
 
@@ -114,7 +114,7 @@ sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc
 sysctl -p
 ```
 
-**Qué hace paso a paso:**
+**como funciona**
 
 1. Añade las cadenas `ipv4` e `ipv6` a `/etc/modules` (carga de módulos al arrancar).
 2. Activa `net.ipv4.ip_forward=1` en caliente con `sysctl -w` (efecto inmediato, no persistente por sí solo).
@@ -123,7 +123,7 @@ sysctl -p
 5. Recarga la configuración con `sysctl -p`.
 6. Muestra un aviso recomendando reiniciar el equipo.
 
-> ⚠️ **Nota:** el `sed` solo funciona si esas líneas ya existen comentadas en `sysctl.conf` (es el caso por defecto en Debian/Ubuntu). Si el fichero no contiene esa línea exacta, el `sed` no tendrá efecto y habrá que añadirla manualmente.
+>  **Nota:** el `sed` solo funciona si esas líneas ya existen comentadas en `sysctl.conf` (es el caso por defecto en Debian/Ubuntu). Si el fichero no contiene esa línea exacta, el `sed` no tendrá efecto y habrá que añadirla manualmente.
 
 ---
 
@@ -162,7 +162,7 @@ iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
 4. Muestra las reglas actuales de la cadena `FORWARD` (`iptables -L FORWARD -nv`), útil para verificar el estado antes de añadir la regla NAT.
 5. Inserta una regla de **MASQUERADE** en la cadena `POSTROUTING` de la tabla `nat`, para que todo el tráfico saliente por `eth0` se traduzca a la IP de esa interfaz (NAT dinámico, ideal cuando `eth0` tiene IP dinámica/DHCP).
 
-> 💡 Es, en la práctica, la combinación de `ipforward.sh` + `nat.sh` en un solo script, con extras cosméticos y de reinicio de servicios.
+> Es, en la práctica, la combinación de `ipforward.sh` + `nat.sh` en un solo script, con extras cosméticos y de reinicio de servicios.
 
 ---
 
@@ -184,7 +184,7 @@ iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
 
 **Efecto:** todo el tráfico que salga hacia Internet (o hacia la red al otro lado de `eth0`) desde los hosts de la LAN interna aparecerá con la IP de `eth0` como origen, permitiendo que varias máquinas privadas compartan una única IP pública.
 
-> ⚠️ Esta regla **no es persistente**: se pierde al reiniciar `iptables` o el equipo. Ver la sección [Persistencia de las reglas de NAT](#persistencia-de-las-reglas-de-nat).
+> Esta regla **no es persistente**: se pierde al reiniciar `iptables` o el equipo. Ver la sección [Persistencia de las reglas de NAT](#persistencia-de-las-reglas-de-nat).
 
 ---
 
@@ -203,7 +203,7 @@ fi
 done
 ```
 
-**Qué hace paso a paso:**
+**Que hace :**
 
 1. Lee, línea a línea, el fichero `ip.txt` (que el usuario debe crear con una IP candidata a gateway por línea).
 2. Para cada IP `$n`, la configura como **puerta de enlace por defecto** (`route add default gw $n`) en el equipo desde el que se ejecuta el test.
@@ -218,7 +218,7 @@ done
 10.0.0.1
 ```
 
-> ⚠️ Este script modifica la tabla de rutas del equipo donde se ejecuta (`route add default gw`) en cada iteración, sin eliminar la ruta anterior. En sistemas con `iproute2` moderno puede no existir el comando `route` (paquete `net-tools`); instálalo con `apt install net-tools` si es necesario, o adapta el script a `ip route replace default via $n`.
+> Este script modifica la tabla de rutas del equipo donde se ejecuta (`route add default gw`) en cada iteración, sin eliminar la ruta anterior. En sistemas con `iproute2` moderno puede no existir el comando `route` (paquete `net-tools`); instálalo con `apt install net-tools` si es necesario, o adapta el script a `ip route replace default via $n`.
 
 ---
 
@@ -281,7 +281,7 @@ sudo ./test.sh
 
 ---
 
-## Requisitos
+### Requisitos
 
 | Requisito | Detalle |
 |---|---|
@@ -292,7 +292,7 @@ sudo ./test.sh
 
 ---
 
-## Verificación manual
+### Verificación manual
 
 Comandos útiles para comprobar el estado sin depender de los scripts:
 
@@ -313,7 +313,7 @@ ip a
 
 ---
 
-## Persistencia de las reglas de NAT
+### Persistencia de las reglas de NAT
 
 `nat.sh` y la parte de `iptables` de `router.sh` **no sobreviven a un reinicio**. Para hacerlas persistentes:
 
@@ -326,7 +326,7 @@ O, alternativamente, añadir la ejecución de `nat.sh` a un servicio `systemd` o
 
 ---
 
-## Solución de problemas
+### Solución de problemas
 
 | Síntoma | Causa probable | Solución |
 |---|---|---|
@@ -338,7 +338,7 @@ O, alternativamente, añadir la ejecución de `nat.sh` a un servicio `systemd` o
 
 ---
 
-## Consideraciones de seguridad
+### Consideraciones de seguridad
 
 - Activar IP Forwarding convierte el equipo en un **punto de tránsito de tráfico**: revisa siempre las reglas `FORWARD` de `iptables` para no dejar la red completamente abierta entre segmentos.
 - El `MASQUERADE` oculta las IPs internas, pero **no sustituye a un firewall**: complementa estos scripts con reglas de filtrado (`iptables -A FORWARD ...`) según la política de seguridad de tu red.
@@ -352,4 +352,6 @@ Este proyecto se distribuye bajo los términos indicados en el fichero [`LICENSE
 
 ---
 
-<http://www.hackingyseguridad.com/>
+#
+http://www.hackingyseguridad.com/
+#
